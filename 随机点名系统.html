@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>K8511随机点名系统</title>
+		<script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body{
+				background-image: url(img/preview.jpg);
+				background-size: 100%;
+			}
+			h1{
+				text-align: center;
+				font-family:"楷体";
+			}
+			span{
+				float: right;
+            position: relative;
+            bottom: 10px;
+            right: 500px;
+			}
+			#btn{
+				font-family: "楷体";
+				font-size: 30px;
+				width: 120px;
+				height: 50px;
+				margin-left: 780px;
+            	margin-top: 20px;
+			}
+			#box{
+				width: 784px;
+				height: auto;
+				clear: both;
+				margin: 0 auto;
+				margin-top: 20px;
+			}
+			.name{
+				border: 1px solid white;
+				background-color: white;
+				opacity: 0.8;
+				text-align: center;
+				line-height: 30px;
+				font-family: "楷体";
+				font-size: 25px;
+				width: 100px;
+				height: 30px;
+				margin: 5px;
+				float: left;
+			}
+		</style>
+	</head>
+	<script type="text/javascript">
+		$(function(){
+			//数组存储数据
+			var names=["陆成乾","罗俊峰","刘文举","陈宇豪","孙钰钦","李钊","高亚杰","王森"
+                ,"张辉","陈欣","彭泽凯","项茂","刘鑫","苏高帅","冯旭东","梅启鹏"
+                ,"邓光威","陈其祥","陈思航","郑家源","李宇翔","马宇康","吴远鹏","何显彬"
+                ,"王豪","石榴","范传华","熊兆鹏","齐亮策","李傲","吴胜勇","霍善庆"
+                ,"张贤","王必","江文李","吴曙光","李王寅","瞿正","杨兆博","马翔瑞","叶茂祥"
+                ,"姚鑫康","卢冬阳","赵杰","纪道明","杨振东","鄢俊波","吴小刚","程斌"];
+            
+            //讲数组数据存入页面
+            for (var i=0;i<names.length;i++) {
+            	var str=$("<div class='name'>"+names[i]+"</div>");
+            	$("#box").append(str);
+            }
+            
+            //产生随机数，并改变对应区域背景颜色
+  			var id=0;
+			function choose(){
+				var lucky=parseInt(Math.random()*names.length);
+				$("#box").children().each(function(i,dom){
+					if (i!=lucky) {
+						$(dom).css({"background-color":"white"});
+					}else{
+						$(dom).css({"background-color":"yellow"});
+					}
+				})
+				id=setTimeout(choose,100);
+			}
+			
+			//开始、停止事件操作
+			$(":button").click(function(){
+				if ($(this).val()=="点名") {
+					$(this).val("停止");
+					choose();	
+				} else{
+					$(this).val("点名");
+					clearInterval(id);
+				}
+			})
+			
+			//动态显示时间
+			function showTime(){
+				var date=new Date();
+				$("span").html(date.toLocaleString());
+			}
+			showTime();
+			setInterval(showTime,1000);
+		})
+	</script>
+	<body>
+		<h1>随机点名系统</h1>
+		<span></span>
+		<div id="box"></div>
+		<input id="btn" type="button" value="点名" />
+	</body>
+</html>
